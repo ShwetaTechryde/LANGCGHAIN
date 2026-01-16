@@ -1,17 +1,17 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.prompts import PromptTemplate
-
+import os
 from dotenv import load_dotenv
+from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
+
 load_dotenv()
-
-OPENAI_API_KEY="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"
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise RuntimeError("OPENAI_API_KEY is missing. Set it in .env or the environment.")
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
     model="gpt-4o-mini",
-    temperature=0.7
+    temperature=0.7,
 )
 
 policy_prompt = PromptTemplate(
@@ -24,8 +24,8 @@ policy_prompt = PromptTemplate(
 )
 
 final_prompt = policy_prompt.format(
-    policy_type="Auto",
-    age=12,
+    policy_type="Term Life",
+    age=19,
     income="19 LPA"
 )
 
